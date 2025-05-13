@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container my-5">
+    <h2 class="text-center mb-4">📊 Student Marks & Attendance Dashboard</h2>
+
+    <!-- Input Form -->
+    <div class="card p-4 shadow-sm">
+      <form id="studentForm" class="row g-3">
+        <div class="col-md-4">
+          <input type="text" id="name" class="form-control" placeholder="Student Name" required />
+        </div>
+        <div class="col-md-3">
+          <input type="number" id="marks" class="form-control" placeholder="Marks (%)" required />
+        </div>
+        <div class="col-md-3">
+          <input type="number" id="attendance" class="form-control" placeholder="Attendance (%)" required />
+        </div>
+        <div class="col-md-2 d-grid">
+          <button type="submit" class="btn btn-success">Add</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Table -->
+    <div class="mt-4">
+      <h5>📋 Student Records</h5>
+      <div class="table-responsive">
+        <table class="table table-bordered text-center align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>Name</th>
+              <th>Marks (%)</th>
+              <th>Attendance (%)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="dataTable"></tbody>
+        </table>
+      </div>
+      <button class="btn btn-outline-primary" onclick="exportCSV()">📥 Export to CSV</button>
+    </div>
+
+    <!-- Chart -->
+    <div class="mt-5">
+      <canvas id="studentChart" width="400" height="200"></canvas>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
