@@ -9,13 +9,11 @@ const chartWarning = document.getElementById("chartWarning");
 let studentData = JSON.parse(localStorage.getItem("studentData")) || [];
 let chart;
 
-// Theme toggle
 themeToggle.addEventListener("click", () => {
   document.body.classList.toggle("dark-theme");
   document.body.classList.toggle("light-theme");
 });
 
-// Add student
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   const name = document.getElementById("name").value.trim();
@@ -66,9 +64,8 @@ function updateChart(data) {
   const marks = data.map(s => s.marks);
   const attendance = data.map(s => s.attendance);
 
-  // Bright visual colors
-  const markColors = marks.map(m => m < 50 ? "#dc3545" : "#007bff");       // Red / Blue
-  const attendanceColors = attendance.map(a => a < 75 ? "#fd7e14" : "#ffc107"); // Orange / Yellow
+  const markColors = marks.map(m => m < 50 ? "#dc3545" : "#007bff");
+  const attendanceColors = attendance.map(a => a < 75 ? "#fd7e14" : "#ffc107");
 
   if (chart) chart.destroy();
   chart = new Chart(chartCanvas, {
@@ -150,7 +147,6 @@ function deleteStudent(index) {
   }
 }
 
-// Export to CSV
 function exportCSV() {
   let csv = "\uFEFFName,Marks (%),Attendance (%)\r\n";
   studentData.forEach((s) => {
@@ -167,7 +163,6 @@ function exportCSV() {
   document.body.removeChild(a);
 }
 
-// Export to Excel
 function exportExcel() {
   const worksheet = XLSX.utils.json_to_sheet(studentData);
   const workbook = XLSX.utils.book_new();
@@ -175,13 +170,11 @@ function exportExcel() {
   XLSX.writeFile(workbook, "student_data.xlsx");
 }
 
-// Export to PDF (remove action column)
 function exportPDF() {
-  const clone = tableContainer.cloneNode(true);
-  const rows = clone.querySelectorAll("tr");
-  rows.forEach(row => {
-    const actionCell = row.lastElementChild;
-    if (actionCell) actionCell.remove();
+  const cloneTable = tableContainer.cloneNode(true);
+  cloneTable.querySelectorAll("tr").forEach(row => {
+    const lastCell = row.lastElementChild;
+    if (lastCell && row.children.length === 4) lastCell.remove();
   });
 
   const opt = {
@@ -192,13 +185,11 @@ function exportPDF() {
     jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
   };
 
-  html2pdf().set(opt).from(clone).save();
+  html2pdf().set(opt).from(cloneTable).save();
 }
 
-// Search live
 searchBar.addEventListener("input", () => {
   render(searchBar.value);
 });
 
-// Initial render
 render();
